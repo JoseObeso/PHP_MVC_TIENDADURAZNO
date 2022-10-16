@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <title>Tienda Durazno</title>
+  <link rel="stylesheet" href="<?= RUTA_PUBLIC_CSS . '/bootstrap.min.css' ?>">
+  <link rel="stylesheet" href="<?= RUTA_PUBLIC_CSS . '/pixeladmin.min.css' ?>">
+  <link rel="stylesheet" href="<?= RUTA_PUBLIC_CSS . '/dark-orange.min.css' ?>">
+  <link rel="stylesheet" href="<?= RUTA_PUBLIC_CSS . '/stylos.css' ?>">
+  <link rel="shortcut icon" href="<?= RUTA_PUBLIC_GRA . 'favicon.ico' ?>" type="image/x-icon">
+</head>
+ <body>
+  <div class="page-signin-container" id="page-signin-form">
+    <img src="<?= RUTA_PUBLIC_GRA . '/duraz.png' ?>" class="img-fluid">
+    <div class="panel p-a-4">
+      <fieldset class="form-group form-group-lg">
+        <div class="form-group w-icon">
+          <input type="text" autofocus="autofocus" required="required" class="form-control input-lg" id="dni" placeholder="DNI de 8 digitos" autocomplete="off" onkeypress="return valida_ingreso_de_dni(event)" maxlength="8">
+          <span class="fa fa-user signin-form-icon"></span>
+        </div>
+      </fieldset>
+      <fieldset class="form-group form-group-lg">
+        <input type="password" required="required" class="form-control input-lg" id="clave" placeholder="Ingrese Clave">
+      </fieldset>
+      <span id="msj_aviso"></span>
+      <button class="btn btn-block btn-lg btn-primary m-t-3" id="ingresar">INGRESAR</button>
+    </div>
+  </div>
+  <script src="<?= RUTA_PUBLIC_JS ?>jquery.min.js"></script>
+  <script src="<?= RUTA_PUBLIC_JS ?>bootstrap.min.js"></script>
+  <script src="<?= RUTA_PUBLIC_JS ?>pixeladmin.min.js"></script>
+  <script src="<?= RUTA_PUBLIC_JS ?>inicio.js"></script>
+  <script src="<?= RUTA_PUBLIC_JS ?>validaciones.js"></script>
+</body>
+
+</html>
