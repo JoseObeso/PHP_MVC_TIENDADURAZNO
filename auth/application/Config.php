@@ -1,16 +1,14 @@
 <?php
-// define('DIRECCION_URL', 'https://elpiquero.com/durazno/');
-define('DIRECCION_URL', 'http://localhost/durazno/');
+define('DIRECCION_URL', 'https://elpiquero.com/durazno/');
 define('INSTITUCION', 'TIENDA DE VENTAS DE DURAZNO');
 define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', '12345');
-define('DB_NAME', 'tdurazno');
+define('DB_USER', 'elpique_root');
+define('DB_PASS', 'Jose_2020_Obeso');
+define('DB_NAME', 'elpique_wpbd');
 define('DB_CHAR', 'utf8');
 define('DEFAULT_CONTROLLER', 'index');
 define('DEFAULT_LAYOUT', 'pixeladmin');
-define('NOMBRE_APP', 'Tienda');
-
+define('NOMBRE_APP', 'Venta de Durazno');
 define('SERVIDOR', DIRECCION_URL);
 define('BASE_URL', DIRECCION_URL.NOMBRE_APP.'/');
 define('RUTA_PUBLIC', DIRECCION_URL.'pub/');

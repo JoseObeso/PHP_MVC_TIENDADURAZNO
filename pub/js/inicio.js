@@ -1,92 +1,78 @@
-var url = window.parent.location.href;
-// http://localhost/durazno/auth/
+var lc_http = 'https://',
+    lc_domain = document.domain,
+    lc_modulo = "/durazno/",
+    lc_acceso = 'auth/',
+    lc_gra = 'pub/gra/',
+    lc_app = lc_http + lc_domain + lc_modulo + lc_acceso,
+    lc_url_grafico = lc_http + lc_domain + lc_modulo + lc_gra,
+    leer_dni, leer_clave, nro_registros, json_encontrados, filas;
 
-
-// $(document).ready(function() {
-//     $("#msj_aviso").html("<center>-- Bienvenidos--</center>").show();
-
-
-//     $("#ingresar").click(function() {
-//         var lc_dni = $('#dni').val(),
-//             lc_clave = $('#clave').val();
-//         console.log(lc_dni);
-//         console.log(lc_clave);
-
-
-
-//     })
-
-
-// });
-
-var modulo = "/appmvc",
-    url = 'http://' + document.domain + modulo + '/acceso/',
-    publico = "/public/",
-    url_grafico = 'http://' + document.domain + modulo + publico + '/gra/',
-    leer_usuario, leer_clave, datos_usuario_clave, nro_registros, encontrados, filas, lc_user, lc_clave;
-
-
-
-
-function validar_usuario(lc_user, lc_clave) {
-    var data_user = { "user": lc_user, "clave": lc_clave };
+function validar_usuario(lc_dni, lc_clave) {
+    var etiqueta_aviso = $("#msj_aviso"),
+        data_validar = { "dni": lc_dni, "clave": lc_clave };
     $.ajax({
-        data: data_user,
+        data: data_validar,
         dataType: 'json',
-        url: url + 'validar/verificar_ingreso_usuario',
+        url: lc_app + 'validar/verificar_ingreso_usuario',
         type: 'post',
         beforeSend: function() {
-            $("#msg-espera").html("<center><img src='" + url_grafico + "/cargando.gif' width='180' height='13'></center>");
+            etiqueta_aviso.html("<center><img src='" + lc_url_grafico + "/cargando.gif' width='180' height='13'></center>");
         },
-        success: function(encontrados) {
-            $("#msg-espera").html("");
-
-            console.log(encontrados);
-            nro_registros = encontrados.length;
+        success: function(json_encontrados) {
+            etiqueta_aviso.html("");
+            console.log(json_encontrados);
+            nro_registros = json_encontrados.length;
             if (nro_registros > 0) {
-                encontrados.forEach(function(filas) {
+                json_encontrados.forEach(function(filas) {
                     if (filas.encontro === '1') {
-                        var lc_user = filas.nombreusuario,
-                            lc_nombre = filas.nombres,
-                            lc_foto = filas.foto;
-                        $("#msg-espera").html("<center><strong><font color='white'>Bienvenido : " + lc_nombre + "<br> </font><strong></center>").show();
+                        var lc_apellidos_nombres = filas.apellidos_nombres;
+                        etiqueta_aviso.html("<center><strong><font color='#162939'>Bienvenido : " + lc_apellidos_nombres + "<br> </font><strong></center>").show();
                         setInterval(function() {
-                            window.location.href = url + 'app';
-                        }, 100);
+                            window.location.href = lc_app + 'app';
+                        }, 1000);
 
                     } else {
-                        $("#msg-espera").html("<center><strong><font color='#ffd15c'> -- Usuario no existe o clave incorrecta o desactivado -- </font><strong></center>").show();
-                        $("#slt_comites_de_user").html("").attr("disabled", true);
-                        $("#ingresar").attr("disabled", true);
+                        etiqueta_aviso.html("<center><strong><font color='#162939'>Usuario no existe o clave incorrecta o desactivado...</font><strong></center>").show();
+                        setInterval(function() {
+                            etiqueta_aviso.html("<center><strong><font color='#162939'>Usuario no existe o clave incorrecta o desactivado...</font><strong></center>").hide("slow");
+                        }, 3000);
                     }
                 });
             }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert('Error, Revisar consola ');
+            console.log('jqXHR:');
+            console.log(jqXHR);
+            console.log('textStatus:');
+            console.log(textStatus);
+            console.log('errorThrown:');
+            console.log(errorThrown);
         }
     });
-
 
 }
 
 $(document).ready(function() {
     $('.crear-tooltip').tooltip();
-    $('#txt_usuario').val('').focus();
-    $('#txt_clave').val('');
-    $('#txt_usuario').keypress(function(e) {
+    $('#dni').val('').focus();
+    $('#clave').val('');
+    $('#dni').keypress(function(e) {
         if (e.which === 13) {
-            $('#txt_clave').focus();
+            $('#clave').focus();
         }
     });
-
-    $('#iniciar_sesion').click(function() {
-        lc_user = $('#txt_usuario').val();
-        lc_clave = $('#txt_clave').val();
-        if (lc_user == "" || lc_clave == "") {
-            $("#msg-espera").html("<center><strong><font color='#ffd15c'>Nombre de usuario y/o clave vacia...</font><strong></center>").show();
+    $('#ingresar').click(function() {
+        lc_dni = $('#dni').val();
+        lc_clave = $('#clave').val();
+        if (lc_dni == "" || lc_clave == "") {
+            $("#msj_aviso").html("<center><strong><font color='#162939'>Nombre de usuario y/o clave vacia...</font><strong></center>").show();
+            setInterval(function() {
+                $("#msj_aviso").html("<center><strong><font color='#162939'>Nombre de usuario y/o clave vacia...</font><strong></center>").hide("slow");
+            }, 3000);
         } else {
-            validar_usuario(lc_user, lc_clave);
+            validar_usuario(lc_dni, lc_clave);
         }
     });
-
-
 
 });
