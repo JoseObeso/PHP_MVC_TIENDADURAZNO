@@ -14,9 +14,6 @@ class validarModel extends Model
     function  RevisarUser($dni, $clave)
     {
         $read_user =  "select apellidos_nombres, sexo from usuarios where dni = '" . $dni . "' and clave = '" . $clave . "'";
-        // echo $read_user;
-        // exit;
-
         $ejecucion_read = $this->_db->prepare($read_user);
         $ejecucion_read->execute();
         if ($ejecucion_read->rowCount()) {
